@@ -1,0 +1,150 @@
+<script lang="ts">
+    import { Button } from "$lib/components/ui/button";
+	import { onMount } from "svelte";
+
+    export let note: string;
+    export let frequency: number;
+    export let keypress: string;
+    export let masterGain: GainNode;
+    export let audioContext: AudioContext;
+    export let isBlackKey: boolean;
+    export let adsr: number[];
+
+    let attack: number;
+    let decay: number;
+    let sustain: number;
+    let release: number;
+
+    let gainNode: GainNode;
+
+    $: if (adsr) {
+        attack = adsr[0];
+        decay = adsr[1];
+        sustain = adsr[2];
+        release = adsr[3];
+    }
+    
+    // let mousePressed: boolean = false;
+    // let mouseEntered: boolean = false;
+    // let keyHeld: boolean = false;
+    let init: boolean = false;
+
+    let oscillator: OscillatorNode;
+
+    function applyADSR(gainNode: GainNode) {
+        const now = audioContext.currentTime;
+        gainNode.gain.setValueAtTime(0, now);
+        gainNode.gain.linearRampToValueAtTime(1, now + attack);
+        gainNode.gain.linearRampToValueAtTime(sustain, now + attack + decay);
+    }
+
+	function playNote() {
+        oscillator = audioContext.createOscillator();
+        oscillator.frequency.value = frequency;
+        gainNode = audioContext.createGain();
+        applyADSR(gainNode);
+        oscillator.connect(gainNode);
+        gainNode.connect(masterGain);
+        oscillator.type = "square";
+        oscillator.start();
+        init = true;
+        
+	}
+
+    function stopNote() {
+        if (oscillator) {
+                const now = audioContext.currentTime;
+                gainNode.gain.linearRampToValueAtTime(0, now + release);
+                oscillator.stop(now + release);
+                init = false;
+            }
+    }
+
+    function onKeyDown(e: any) {
+        if (e.key == keypress && !init) {
+            playNote();
+        }
+    }
+
+    function onKeyUp(e: any) {
+        if (e.key == keypress) {
+            stopNote();
+        }
+    }
+
+    // function mouseDown() {
+    //     mousePressed = true;
+    //     if (mouseEntered) {
+    //         playNote()
+    //     }
+    // }
+
+    // function mouseUp() {
+    //     mousePressed = false;
+    //     stopNote();
+    // }
+
+    // function mouseEnter() {
+    //     mouseEntered = true;
+    //     if (mousePressed) {
+    //         playNote()
+    //     }
+    // }
+
+    // function mouseExit() {
+    //     mouseEntered = false;
+    //     stopNote();
+    // }
+
+
+    function writeNote() {
+        if (note.includes("s")) {
+            return ""
+        }
+        else {
+            return note
+        }
+    }
+    
+</script>
+
+
+<svelte:window 
+    on:keydown={onKeyDown}
+    on:keyup|preventDefault={onKeyUp}
+
+    
+
+/>
+
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+    <div  
+    
+        class="flex flex-col justify-end w-full h-full border-x-2 border-y-2 rounded-md items-center pb-12
+        border-t-slate-200 border-r-slate-200 
+        border-l-slate-500 border-b-slate-500
+
+        {isBlackKey ? "bg-green-200" : "bg-purple-200 "}
+        ${init ? "transition-transform scale-95 duration-100" : "transition-transform scale-100 duration-50"}"
+
+        style="transform-origin: top; user-select: none;"
+
+
+    >
+
+        <div 
+            style="user-select: none;"
+            class="font-bold opacity-70"
+        >
+            {writeNote()}
+        </div>
+            
+    </div>
+
+
+<!--     
+    on:mouseenter={mouseEnter}  
+    on:mouseleave={mouseExit}    
+    on:mouseup={mouseUp}     
+    on:mousedown={mouseDown}  -->
