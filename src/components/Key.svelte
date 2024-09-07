@@ -24,9 +24,9 @@
         release = adsr[3];
     }
     
-    // let mousePressed: boolean = false;
-    // let mouseEntered: boolean = false;
-    // let keyHeld: boolean = false;
+    let mousePressed: boolean = false;
+    let mouseEntered: boolean = false;
+    let keyHeld: boolean = false;
     let init: boolean = false;
 
     let oscillator: OscillatorNode;
@@ -63,38 +63,46 @@
     function onKeyDown(e: any) {
         if (e.key == keypress && !init) {
             playNote();
+            keyHeld = true;
         }
     }
 
     function onKeyUp(e: any) {
         if (e.key == keypress) {
             stopNote();
+            keyHeld = false;
         }
     }
 
-    // function mouseDown() {
-    //     mousePressed = true;
-    //     if (mouseEntered) {
-    //         playNote()
-    //     }
-    // }
+    function mouseDown() {
+        mousePressed = true;
+        if (mouseEntered) {
+            if (!keyHeld) {
+                playNote()
+            }
+        }
+    }
 
-    // function mouseUp() {
-    //     mousePressed = false;
-    //     stopNote();
-    // }
+    function mouseUp() {
+        mousePressed = false;
+        if (!keyHeld) {
+            stopNote();
+        }
+    }
 
-    // function mouseEnter() {
-    //     mouseEntered = true;
-    //     if (mousePressed) {
-    //         playNote()
-    //     }
-    // }
+    function mouseEnter() {
+        mouseEntered = true;
+        if (mousePressed && !keyHeld) {
+            playNote()
+        }
+    }
 
-    // function mouseExit() {
-    //     mouseEntered = false;
-    //     stopNote();
-    // }
+    function mouseExit() {
+        mouseEntered = false;
+        if (!keyHeld) {
+            stopNote()
+        }
+    }
 
 
     function writeNote() {
@@ -112,7 +120,8 @@
 <svelte:window 
     on:keydown={onKeyDown}
     on:keyup|preventDefault={onKeyUp}
-
+    on:mouseup={mouseUp}     
+    on:mousedown={mouseDown} 
     
 
 />
@@ -129,7 +138,9 @@
         ${init ? "transition-transform scale-95 duration-100" : "transition-transform scale-100 duration-50"}"
 
         style="transform-origin: top; user-select: none;"
-
+        on:mouseenter={mouseEnter}  
+        on:mouseleave={mouseExit}    
+        
 
     >
 
@@ -143,8 +154,5 @@
     </div>
 
 
-<!--     
-    on:mouseenter={mouseEnter}  
-    on:mouseleave={mouseExit}    
-    on:mouseup={mouseUp}     
-    on:mousedown={mouseDown}  -->
+    
+    

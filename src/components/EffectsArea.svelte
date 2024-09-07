@@ -51,32 +51,40 @@
 
 
 
-    <EffectCont text = "ADSR">
+    <EffectCont text = "ADSR" size={2}>
         <EffectRow>
             <EffectLabel>Attack</EffectLabel>
             <Slider bind:value={adsrValue[0]} max={1} step={.01} class="max-w-[100%]" />
+            {adsrValue[0]}
         </EffectRow>
         <EffectRow>
             <EffectLabel>Decay</EffectLabel>
             <Slider bind:value={adsrValue[1]} max={1} step={.01} class="max-w-[100%]" />
+            {adsrValue[1]}
         </EffectRow>
         <EffectRow>
             <EffectLabel>Sustain</EffectLabel>
             <Slider bind:value={adsrValue[2]} max={1} step={.01} class="max-w-[100%]" />
+            {adsrValue[2]}
         </EffectRow>
         <EffectRow>
             <EffectLabel>Release</EffectLabel>
             <Slider bind:value={adsrValue[3]} max={1} step={.01} class="max-w-[100%]" />
+            {adsrValue[3]}
         </EffectRow>
 
         
         
+
+
     </EffectCont>
 
     <EffectCont text = "effect">
 
     </EffectCont>
+    <EffectCont text = "effect">
 
+    </EffectCont>
     <EffectCont text = "effect">
 
     </EffectCont>
