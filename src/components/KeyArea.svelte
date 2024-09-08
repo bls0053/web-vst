@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Slider from "$lib/components/ui/slider/slider.svelte";
+
     import EffectCol from "./EffectCol.svelte";
     import EffectCont from "./EffectCont.svelte";
 	import EffectKnob from "./EffectKnob.svelte";
@@ -9,6 +9,8 @@
     import KeyBoard from "./KeyBoard.svelte";
     import OctaveEffect from "./OctaveEffect.svelte";
     import ModeToggles from "./ModeToggles.svelte";
+	import Slider from "./Slider.svelte";
+
 
     export let gainValue: number = 33;
     export let adsrValue: number[];
@@ -17,6 +19,9 @@
     let controlOn: boolean = false;
     let noteOn: boolean = false;
     let octaveValue: number = 0;
+    let pitch: number = .48;
+
+
 
 
 </script>
@@ -34,13 +39,14 @@
         octaveValue={octaveValue}
         noteOn={noteOn}
         controlOn={controlOn}
+        pitchValue={pitch}
     />
 
     <EffectCont>
         <EffectRow>
             <EffectCol>
-                <EffectLabel>Gain</EffectLabel>
-                <EffectKnob bind:value={gainValue} min={0} max={100}></EffectKnob>
+                <EffectLabel size="small">Gain</EffectLabel>
+                <EffectKnob bind:value={gainValue} min={0} max={100} textSize={40}></EffectKnob>
             </EffectCol>
         </EffectRow>
 
@@ -59,16 +65,20 @@
 
         <EffectRow>
             <EffectCol>
-                <EffectLabel>coming soon :/</EffectLabel>
-                <Slider/>
+                <EffectLabel size="small">Pitch Bend</EffectLabel>
+                <EffectRow>
+                    <Slider bind:value={pitch} max={.96} step={.01} />
+                    <div class="w-1/5">{(pitch - .48).toFixed(2)}</div>
+                    
+                </EffectRow>
             </EffectCol>
             
             
         </EffectRow>
         <EffectRow>
             <EffectCol>
-                <EffectLabel>coming soon :/</EffectLabel>
-                <Slider/>
+                <EffectLabel size="small">coming soon :D</EffectLabel>
+
             </EffectCol>
             
         </EffectRow>

@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import Icon from '@iconify/svelte';
-    import { Slider } from "$lib/components/ui/slider";
+
 	import EffectCont from "./EffectCont.svelte";
     import { createEventDispatcher, onMount } from 'svelte';
 	import EffectRow from "./EffectRow.svelte";
@@ -107,8 +107,20 @@
 
 
     
-    <EffectCont></EffectCont>
-    <EffectCont size={2}></EffectCont>
+    <EffectCont><EffectRow>
+        <EffectCol>
+            <EffectLabel>coming soon :D</EffectLabel>
+
+        </EffectCol>
+        
+    </EffectRow></EffectCont>
+    <EffectCont size={2}><EffectRow>
+        <EffectCol>
+            <EffectLabel>coming soon :D</EffectLabel>
+
+        </EffectCol>
+        
+    </EffectRow></EffectCont>
   
     
     

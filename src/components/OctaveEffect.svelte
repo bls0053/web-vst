@@ -4,7 +4,7 @@
     const dispatch = createEventDispatcher();
 
     export let currOctave: number = 0;
-    let range: number[] = [-2, -1, 0, 1, 2];
+    let range: number[] = [-2, -1, 0, 1, 2, 3, 4];
 
     $: {
         dispatch("octaveChange", {currOctave})
@@ -16,7 +16,7 @@
 
 
     function increment() {
-        if (currOctave == range[4]) {
+        if (currOctave == range[6]) {
             return;
         }
         currOctave++;

@@ -16,13 +16,14 @@
     export let octave: number;
     export let controlOn: boolean;
     export let noteOn: boolean;
+    export let pitch: number;
 
     let attack: number;
     let decay: number;
     let sustain: number;
     let release: number;
 
-    let gainNode: GainNode;
+    
 
     $: if (adsr) {
         attack = adsr[0];
@@ -38,7 +39,9 @@
     let bool: boolean = false;
 
     let oscillator: OscillatorNode;
-
+    let frequencyParam: AudioParam;
+    let waveParam: AudioParam;
+    let gainNode: GainNode;
     
     function applyADSR(gainNode: GainNode) {
         const now = audioContext.currentTime;
@@ -49,17 +52,54 @@
 
 	function playNote() {
         oscillator = audioContext.createOscillator();
-        oscillator.frequency.value = (frequency / (2**(octave * -1)));
+        const lowPassFilter = audioContext.createBiquadFilter();
+        lowPassFilter.type = 'lowpass';
+        const now = audioContext.currentTime;
+        lowPassFilter.Q.setValueAtTime(1, now)
+        frequencyParam = oscillator.frequency;
+        
+        updateFrequency(pitch);
+
         gainNode = audioContext.createGain();
         applyADSR(gainNode);
+
+
         oscillator.connect(gainNode);
+        // lowPassFilter.connect(gainNode)
         gainNode.connect(masterGain);
         // ignore - it doesnt know im him
         oscillator.type = wave;
         oscillator.start();
         init = true;
-        
-	}
+    }
+
+    $: if (pitch || octave) {
+        updateFrequency(pitch)
+    }
+
+    $: if (octave == 0) {
+        updateFrequency(pitch)
+    }
+
+
+    $: if (wave) {
+        updateWave();
+    }
+
+    function updateWave() {
+        const now = audioContext.currentTime;
+        if (oscillator) {
+            // ignore - it doesnt know im him
+            oscillator.type = wave;
+        }
+    }
+
+    function updateFrequency(newPitch: number) {
+        if (oscillator) {
+            const now = audioContext.currentTime;
+            frequencyParam.setValueAtTime(((frequency + ((newPitch-.48)*((frequency)*(2**(1/12))))) / (2**(octave * -1))), now);
+        }
+    }
 
     function stopNote() {
         

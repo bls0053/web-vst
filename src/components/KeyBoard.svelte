@@ -20,6 +20,8 @@
     export let octaveValue: number;
     export let controlOn: boolean;
     export let noteOn: boolean;
+    export let pitchValue: number;
+
 
     let notesData:NotesData = notes;
     let audioContext: AudioContext;
@@ -35,6 +37,7 @@
     $: if (masterGain) {
         masterGain.gain.value = gainValue / 300;
     }
+
 
 
     function start() {
@@ -129,6 +132,7 @@
                     octave={octaveValue}
                     noteOn={noteOn}
                     controlOn={controlOn}
+                    pitch={pitchValue}
 
                     keypress={notesData[note].keypress}
                     frequency={notesData[note].frequency}
