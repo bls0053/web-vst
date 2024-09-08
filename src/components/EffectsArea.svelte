@@ -1,39 +1,45 @@
 <script lang="ts">
 
+    import Icon from '@iconify/svelte';
     import { Slider } from "$lib/components/ui/slider";
 	import EffectCont from "./EffectCont.svelte";
-    import { createEventDispatcher } from 'svelte';
+    import { createEventDispatcher, onMount } from 'svelte';
 	import EffectRow from "./EffectRow.svelte";
 	import EffectLabel from "./EffectLabel.svelte";
+	import EffectKnob from './EffectKnob.svelte';
+	import EffectCol from './EffectCol.svelte';
+	import WaveCont from './WaveCont.svelte';
 
 	const dispatch = createEventDispatcher();
-    let gainValue: number[] = [33];
-    let adsrValue: number[][] = [[0.0],[0.1],[0.0],[0.0]]
 
+    let adsrValue: number[] = [0.0, 0.1, 0.0, 0.0]
+    let currWave: string = "square"
 
-    $: if (gainValue) {
-        handleGain()
-    }
 
     $: if (adsrValue) {
-        handleAdsr()
+        dispatchAdsr();
     }
 
-    function handleGain() {
-        let gain = gainValue[0];
-        dispatch('gainChange', {gain});
+    $: if (currWave) {
+        dispatchWave();
     }
 
-    function handleAdsr() {
-        let attack = adsrValue[0][0];
-        let decay = adsrValue[1][0];
-        let sustain = adsrValue[2][0];
-        let release = adsrValue[3][0];
-
-        let adsr = [attack, decay, sustain, release]
-        dispatch('adsrChange', {adsr});
+    function dispatchAdsr() {
+        let adsr = adsrValue;
+        console.log("effect-", adsr)
+        dispatch('effectAreaAdsr', {adsr});
     }
 
+    function dispatchWave() {
+        let wave = currWave;
+        console.log("effect-", wave)
+        dispatch('effectAreaWave', {wave});
+    }
+
+    onMount(() => {
+        dispatchAdsr();
+        dispatchWave();
+    })
  
 
 </script>
@@ -44,50 +50,63 @@
 
 <div class="flex flex-row w-full h-1/3 gap-3">
 
-    <EffectCont text = "Gain Slider">
-        <Slider bind:value={gainValue} max={33} step={1} class="max-w-[100%]" />
-        {gainValue}
-    </EffectCont>
 
-
-
-    <EffectCont text = "ADSR" size={2}>
+    <EffectCont size={2}>
         <EffectRow>
-            <EffectLabel>Attack</EffectLabel>
-            <Slider bind:value={adsrValue[0]} max={1} step={.01} class="max-w-[100%]" />
-            {adsrValue[0]}
+            <EffectCol>
+                <EffectLabel>Attack</EffectLabel>
+                <EffectKnob bind:value={adsrValue[0]} min={0} max={5}></EffectKnob>
+            </EffectCol>
+            <EffectCol>
+                <EffectLabel>Decay</EffectLabel>
+                <EffectKnob bind:value={adsrValue[1]} min={0} max={5}></EffectKnob>
+            </EffectCol>
         </EffectRow>
         <EffectRow>
-            <EffectLabel>Decay</EffectLabel>
-            <Slider bind:value={adsrValue[1]} max={1} step={.01} class="max-w-[100%]" />
-            {adsrValue[1]}
+            <EffectCol>
+                <EffectLabel>Sustain</EffectLabel>
+                <EffectKnob bind:value={adsrValue[2]} min={0} max={1}></EffectKnob>
+            </EffectCol>
+            <EffectCol>
+                <EffectLabel>Release</EffectLabel>
+                <EffectKnob bind:value={adsrValue[3]} min={0} max={5}></EffectKnob>
+            </EffectCol>
+        </EffectRow>
+    </EffectCont>
+
+ 
+    
+    <EffectCont>
+        <EffectRow>
+             <EffectLabel>Wave</EffectLabel>
         </EffectRow>
         <EffectRow>
-            <EffectLabel>Sustain</EffectLabel>
-            <Slider bind:value={adsrValue[2]} max={1} step={.01} class="max-w-[100%]" />
-            {adsrValue[2]}
+
+            <WaveCont id="sine" bind:currWave={currWave}>
+                <Icon style="font-size: 50px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="ph:wave-sine-bold"/>
+            </WaveCont>
+            <WaveCont id="square" bind:currWave={currWave}>
+                <Icon style="font-size: 50px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="ph:wave-square-bold"/>
+            </WaveCont>
+            
         </EffectRow>
         <EffectRow>
-            <EffectLabel>Release</EffectLabel>
-            <Slider bind:value={adsrValue[3]} max={1} step={.01} class="max-w-[100%]" />
-            {adsrValue[3]}
+
+            <WaveCont id="sawtooth" bind:currWave={currWave}>
+                <Icon style="font-size: 50px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="ph:wave-sawtooth-bold"/>
+            </WaveCont>
+            <WaveCont id="triangle" bind:currWave={currWave}>
+                <Icon style="font-size: 50px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="ph:wave-triangle-bold"/>
+            </WaveCont>
+            
         </EffectRow>
-
-        
-        
-
-
     </EffectCont>
 
-    <EffectCont text = "effect">
 
-    </EffectCont>
-    <EffectCont text = "effect">
-
-    </EffectCont>
-    <EffectCont text = "effect">
-
-    </EffectCont>
+    
+    <EffectCont></EffectCont>
+    <EffectCont size={2}></EffectCont>
+  
     
     
 </div>

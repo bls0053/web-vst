@@ -6,6 +6,7 @@
 
 
 
-<div class="flex flex-row justify-center font-bold w-28 h-full border-2 border-green-400 rounded-md">
+<div class="flex flex-row justify-center items-center font-bold w-full h-full bg-purple-200 rounded-md select-none
+">
     <slot></slot>
 </div>

@@ -2,6 +2,7 @@
 	import Key from "./Key.svelte";
     import { afterUpdate, onMount } from "svelte";
     import notes from "./KeyData.json";
+	import WaveCont from "./WaveCont.svelte";
 
     interface Note {
         keypress: string;
@@ -15,6 +16,7 @@
 
     export let gainValue: number;
     export let adsrValue: number[];
+    export let waveValue: string;
 
     let notesData:NotesData = notes;
     let audioContext: AudioContext;
@@ -24,10 +26,11 @@
 
     let container: HTMLDivElement;
     let observer: MutationObserver;
+   
 
 
     $: if (masterGain) {
-        masterGain.gain.value = gainValue / 100;
+        masterGain.gain.value = gainValue / 300;
     }
 
 
@@ -37,6 +40,7 @@
         masterGain.gain.value = .33;
         masterGain.connect(audioContext.destination);
         init = true;
+
     }
 
     function positionBlackKeys() {
@@ -75,7 +79,13 @@
             observer.observe(container, { childList: true, subtree: true});
         }
     });
- 
+
+    $: if (init) {
+        const timer = setTimeout(() => {
+            positionBlackKeys();
+        }, 1300);
+    }
+
 
 </script>
 
@@ -102,26 +112,31 @@
     on:resize={positionBlackKeys}
 />
 
-
-<div bind:this={container} class="grid-container w-full h-full ">
-    {#if init}
-        {#each Object.keys(notesData) as note}
-            <div
-            class={notesData[note].isBlackKey ? 'black-key' : 'white-key'}>
-                <Key 
-                note={note}
-                adsr={adsrValue}
-                keypress={notesData[note].keypress}
-                frequency={notesData[note].frequency}
-                audioContext={audioContext}
-                masterGain={masterGain}
-                isBlackKey={notesData[note].isBlackKey}/>
-            </div>
-        {/each}
+<div class="flex flex-col justify-center w-5/6">
+    <div bind:this={container} class="grid-container w-full h-full">
+        {#if init}
+            {#each Object.keys(notesData) as note}
+                <div
+                class=" 
+                {notesData[note].isBlackKey ? 'black-key' : 'white-key'}">
+                    <Key 
+                    note={note}
+                    adsr={adsrValue}
+                    wave={waveValue}
+                    keypress={notesData[note].keypress}
+                    frequency={notesData[note].frequency}
+                    audioContext={audioContext}
+                    masterGain={masterGain}
+                    isBlackKey={notesData[note].isBlackKey}/>
+                </div>
+            {/each}
+        {/if}
+    </div>
+    {#if !init}
+    <div class="flex flex-row h-full justify-center items-center">
+        <button class="w-1/2 bg-purple-200 text-2xl rounded-full p-4 font-bold" on:click={start}>Start</button>
+    </div>
+        
     {/if}
-    
 
-    
-    
 </div>
-<button on:click={start}>start</button>

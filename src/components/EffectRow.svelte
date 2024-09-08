@@ -6,6 +6,6 @@
 
 
 
-<div class=" flex flex-row justify-center items-center w-full h-full gap-4">
+<div class=" flex flex-row justify-evenly items-center w-full h-full gap-2">
     <slot></slot>
 </div>

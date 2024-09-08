@@ -5,19 +5,18 @@
 
 
 
-    let gainValue: number;
+    // let gainValue: number;
     let adsrValue: number[];
-
-    function setGain(event: any) {
-        let newGain = event.detail.gain; 
-        gainValue = newGain;
-        console.log(gainValue)
-    }
+    let waveValue: string;
 
     function setAdsr(event: any) {
-        let newAdsr = event.detail.adsr; 
-        adsrValue = newAdsr;
+        adsrValue = event.detail.adsr;
         console.log(adsrValue)
+    }
+
+    function setWave(event: any) {
+        waveValue = event.detail.wave;
+        console.log(waveValue)
     }
 
 </script>
@@ -31,13 +30,13 @@ bg-orange-200 rounded-md">
 
     
     <HeaderArea/>
-    <EffectsArea 
-        on:gainChange={setGain}
-        on:adsrChange={setAdsr}
+    <EffectsArea
+        on:effectAreaAdsr={setAdsr}
+        on:effectAreaWave={setWave}
     />
     <KeyArea 
-    gainValue={gainValue}
     adsrValue={adsrValue}
+    waveValue={waveValue}
     />
 
 
