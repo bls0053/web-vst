@@ -13,6 +13,9 @@
     export let isBlackKey: boolean;
     export let adsr: number[];
     export let wave: string;
+    export let octave: number;
+    export let controlOn: boolean;
+    export let noteOn: boolean;
 
     let attack: number;
     let decay: number;
@@ -46,7 +49,7 @@
 
 	function playNote() {
         oscillator = audioContext.createOscillator();
-        oscillator.frequency.value = frequency;
+        oscillator.frequency.value = (frequency / (2**(octave * -1)));
         gainNode = audioContext.createGain();
         applyADSR(gainNode);
         oscillator.connect(gainNode);
@@ -180,8 +183,12 @@
             <div 
                 style="user-select: none;"
                 class="font-bold opacity-70 text-center p-2"
-            >
-                {writeNote()}
+            >   {#if (noteOn)}
+                    {writeNote()}
+                {/if}
+                {#if (controlOn)}
+                    <strong>{keypress}</strong>
+                {/if}
             </div>
                 
         </div>

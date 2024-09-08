@@ -77,9 +77,8 @@
  
     
     <EffectCont>
-        <EffectRow>
-             <EffectLabel>Wave</EffectLabel>
-        </EffectRow>
+        <EffectCol>
+            <EffectLabel>Wave</EffectLabel>
         <EffectRow>
 
             <WaveCont id="sine" bind:currWave={currWave}>
@@ -100,6 +99,10 @@
             </WaveCont>
             
         </EffectRow>
+        </EffectCol>
+             
+        
+        
     </EffectCont>
 
 

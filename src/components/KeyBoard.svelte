@@ -17,6 +17,9 @@
     export let gainValue: number;
     export let adsrValue: number[];
     export let waveValue: string;
+    export let octaveValue: number;
+    export let controlOn: boolean;
+    export let noteOn: boolean;
 
     let notesData:NotesData = notes;
     let audioContext: AudioContext;
@@ -123,6 +126,10 @@
                     note={note}
                     adsr={adsrValue}
                     wave={waveValue}
+                    octave={octaveValue}
+                    noteOn={noteOn}
+                    controlOn={controlOn}
+
                     keypress={notesData[note].keypress}
                     frequency={notesData[note].frequency}
                     audioContext={audioContext}

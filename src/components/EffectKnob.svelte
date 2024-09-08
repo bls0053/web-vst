@@ -82,8 +82,10 @@
                 }
                 rotation = -160 + ((value - min) / (max - min)) * 320;
             }
+            editableDiv.blur();
         } 
         else if (event.key === 'Escape') {
+            editableDiv.blur();
             return;
         }
     }
