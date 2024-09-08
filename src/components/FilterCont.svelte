@@ -3,13 +3,13 @@
     import { createEventDispatcher } from 'svelte';
     
     export let id: string;
-    export let currWave: string;
+    export let currFilter: string;
     
     const dispatch = createEventDispatcher();
 
     function handleClick() {
-        currWave = id;
-        dispatch('waveChange', { currWave });
+        currFilter = id;
+        dispatch('filterChange', { currFilter });
     }
 
     
@@ -21,8 +21,8 @@
 
 
 <button on:click={handleClick} 
-    class="flex flex-row justify-evenly items-center w-1/2 pr-1 h-full rounded-md 
-    {currWave==id ?
+    class="flex flex-row justify-evenly items-center w-1/6 pr-1 h-full rounded-md 
+    {currFilter==id ?
     "opacity-100 transition-transform scale-110" 
     : "opacity-50 transition-transform scale-90"}" 
     id={id}>

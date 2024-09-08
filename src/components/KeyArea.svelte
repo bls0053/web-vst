@@ -15,11 +15,13 @@
     export let gainValue: number = 33;
     export let adsrValue: number[];
     export let waveValue: string;
-
+    export let filterValue: string;
+    
     let controlOn: boolean = false;
     let noteOn: boolean = false;
     let octaveValue: number = 0;
     let pitch: number = .48;
+    
 
 
 
@@ -40,6 +42,7 @@
         noteOn={noteOn}
         controlOn={controlOn}
         pitchValue={pitch}
+        filterValue={filterValue}
     />
 
     <EffectCont>

@@ -17,6 +17,7 @@
     export let controlOn: boolean;
     export let noteOn: boolean;
     export let pitch: number;
+    export let filter: string;
 
     let attack: number;
     let decay: number;
@@ -40,8 +41,8 @@
 
     let oscillator: OscillatorNode;
     let frequencyParam: AudioParam;
-    let waveParam: AudioParam;
     let gainNode: GainNode;
+    let filterNode: BiquadFilterNode;
     
     function applyADSR(gainNode: GainNode) {
         const now = audioContext.currentTime;
@@ -52,23 +53,24 @@
 
 	function playNote() {
         oscillator = audioContext.createOscillator();
-        const lowPassFilter = audioContext.createBiquadFilter();
-        lowPassFilter.type = 'lowpass';
+        filterNode = audioContext.createBiquadFilter();
+        
         const now = audioContext.currentTime;
-        lowPassFilter.Q.setValueAtTime(1, now)
         frequencyParam = oscillator.frequency;
         
+        filterNode.type = filter;
+        filterNode.Q.setValueAtTime(1, now)
+        oscillator.type = wave;
+        
+        updateFilter()
         updateFrequency(pitch);
-
         gainNode = audioContext.createGain();
         applyADSR(gainNode);
 
-
-        oscillator.connect(gainNode);
-        // lowPassFilter.connect(gainNode)
+        oscillator.connect(filterNode);
+        filterNode.connect(gainNode)
         gainNode.connect(masterGain);
-        // ignore - it doesnt know im him
-        oscillator.type = wave;
+        
         oscillator.start();
         init = true;
     }
@@ -81,15 +83,23 @@
         updateFrequency(pitch)
     }
 
-
     $: if (wave) {
         updateWave();
     }
 
+    $: if (filter) {
+        console.log(filter)
+        updateFilter(); 
+    }
+
+    function updateFilter() {
+        if (filterNode) {
+            filterNode.type = filter;
+        }
+    }
+
     function updateWave() {
-        const now = audioContext.currentTime;
         if (oscillator) {
-            // ignore - it doesnt know im him
             oscillator.type = wave;
         }
     }

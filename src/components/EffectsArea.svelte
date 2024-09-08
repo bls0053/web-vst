@@ -9,11 +9,13 @@
 	import EffectKnob from './EffectKnob.svelte';
 	import EffectCol from './EffectCol.svelte';
 	import WaveCont from './WaveCont.svelte';
+	import FilterCont from './FilterCont.svelte';
 
 	const dispatch = createEventDispatcher();
 
-    let adsrValue: number[] = [0.1, 0.1, 1, 0.1]
-    let currWave: string = "square"
+    let adsrValue: number[] = [0.1, 0.1, 1, 0.1];
+    let currWave: string = "square";
+    let currFilter: string = "lowpass";
 
 
     $: if (adsrValue) {
@@ -22,6 +24,10 @@
 
     $: if (currWave) {
         dispatchWave();
+    }
+
+    $: if (currFilter) {
+        dispatchFilter();
     }
 
     function dispatchAdsr() {
@@ -36,9 +42,15 @@
         dispatch('effectAreaWave', {wave});
     }
 
+    function dispatchFilter() {
+        let filter = currFilter;
+        dispatch('effectAreaFilter', {filter})
+    }
+
     onMount(() => {
         dispatchAdsr();
         dispatchWave();
+        dispatchFilter();
     })
  
 
@@ -107,14 +119,38 @@
 
 
     
-    <EffectCont><EffectRow>
+    <EffectCont size={2}>
+    
         <EffectCol>
-            <EffectLabel>coming soon :D</EffectLabel>
+            <EffectLabel>Filter</EffectLabel>
+            <EffectRow>
+                <FilterCont id="lowpass" bind:currFilter={currFilter}>
+                    <Icon style="font-size: 30px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-lowpass"/>
+                </FilterCont>
+                <FilterCont id="highpass" bind:currFilter={currFilter}>
+                    <Icon style="font-size: 30px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-highpass"/>
+                </FilterCont>
+                <FilterCont id="bandpass" bind:currFilter={currFilter}>
+                    <Icon style="font-size: 30px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bandpass"/>
+                </FilterCont>
+                <FilterCont id="notch" bind:currFilter={currFilter}>
+                    <Icon style="font-size: 30px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-notch"/>
+                </FilterCont>
+                <FilterCont id="lowshelf" bind:currFilter={currFilter}>
+                    <Icon style="font-size: 30px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-shelving-lo"/>
+                </FilterCont>
+                <FilterCont id="highshelf" bind:currFilter={currFilter}>
+                    <Icon style="font-size: 30px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-shelving-hi"/>
+                </FilterCont>
+            </EffectRow>
+        </EffectCol>
+        <EffectCol>
 
         </EffectCol>
-        
-    </EffectRow></EffectCont>
-    <EffectCont size={2}><EffectRow>
+    </EffectCont>
+
+
+    <EffectCont size={1}><EffectRow>
         <EffectCol>
             <EffectLabel>coming soon :D</EffectLabel>
 
