@@ -117,12 +117,22 @@
 
 
     function writeNote() {
+        let newNote: string;
+        let flatSymbol = "♭";
         if (note.includes("s")) {
-            return ""
+            newNote = note.replace("s", "#")
+            newNote = newNote.replace("f", flatSymbol);
+            newNote = newNote.replace(/\d+/g, '')
+            const firstHalf = newNote.slice(0, 2);
+            const secondHalf = newNote.slice(2);
+
+            return `${firstHalf} ${secondHalf}`;
         }
         else {
-            return note
+            newNote = note;
+            return newNote.replace(/\d+/g, '')
         }
+        
     }
 
     let height = tweened(0, {
@@ -143,8 +153,6 @@
     on:keyup|preventDefault={onKeyUp}
     on:mouseup={mouseUp}     
     on:mousedown={mouseDown} 
-    
-
 />
 
     <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -171,7 +179,7 @@
 
             <div 
                 style="user-select: none;"
-                class="font-bold opacity-70"
+                class="font-bold opacity-70 text-center p-2"
             >
                 {writeNote()}
             </div>

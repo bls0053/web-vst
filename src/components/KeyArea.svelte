@@ -1,5 +1,6 @@
 <script lang="ts">
-	import EffectCol from "./EffectCol.svelte";
+	import Slider from "$lib/components/ui/slider/slider.svelte";
+import EffectCol from "./EffectCol.svelte";
     import EffectCont from "./EffectCont.svelte";
 	import EffectKnob from "./EffectKnob.svelte";
 	import EffectLabel from "./EffectLabel.svelte";
@@ -35,8 +36,11 @@
         </EffectRow>
 
         <EffectRow>
+            <EffectCol>
+                <EffectLabel>Gain</EffectLabel>
+                <Slider value={[1]} max={5} step={1} class="max-w-[70%]" />
+            </EffectCol>
 
-            
         </EffectRow>
 
         <EffectRow>

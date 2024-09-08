@@ -26,13 +26,13 @@
 
     function dispatchAdsr() {
         let adsr = adsrValue;
-        console.log("effect-", adsr)
+        // console.log("effect-", adsr)
         dispatch('effectAreaAdsr', {adsr});
     }
 
     function dispatchWave() {
         let wave = currWave;
-        console.log("effect-", wave)
+        // console.log("effect-", wave)
         dispatch('effectAreaWave', {wave});
     }
 

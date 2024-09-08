@@ -14,6 +14,7 @@
     let originalValue: number;
     let rotation = 0;
     let container: HTMLDivElement;
+    let editableDiv: HTMLDivElement;
     let lastAngle: number= 0;
     let mousePressed: boolean = false;
     const dispatch = createEventDispatcher();
@@ -44,7 +45,6 @@
         const newValue = parseFloat(rotationToValue(rotation).toFixed(2));
         if (newValue !== value) {
             value = newValue;
-            dispatch('valueChange', { value });
         }
         lastAngle = angle;
     }
@@ -52,7 +52,7 @@
     onMount(() => {
         const percentage = (value - min) / (max - min);
         rotation = -160 + (percentage * 320);
-        dispatch('valueChange', { value });
+        // dispatch('valueChange', { value });
     });
 
     function mouseDown() {
@@ -68,9 +68,8 @@
     }
 
     function handleKeyDown(event: KeyboardEvent) {
-        const target = event.target as HTMLDivElement;
         if (event.key === 'Enter') {
-            const newValue = parseFloat(target.innerText.trim());
+            const newValue = parseFloat(editableDiv.innerText.trim());
             if (!isNaN(newValue)) {
                 if (newValue < min) {
                     value = min;
@@ -82,18 +81,27 @@
                     value = newValue;
                 }
                 rotation = -160 + ((value - min) / (max - min)) * 320;
-                target.innerText = value.toString(); 
             }
-            else {
-                target.innerText = value.toString(); 
-            }
-            dispatch('valueChange', { value });
-
         } 
         else if (event.key === 'Escape') {
-            target.innerText = value.toString(); 
+            return;
         }
     }
+
+    $: if (value==0) {
+            console.log(value)
+            if (editableDiv) {
+                editableDiv.innerText = value.toString();
+        }
+    }
+
+    $: if (value) {
+            console.log(value)
+            if (editableDiv) {
+                editableDiv.innerText = value.toString();
+        }
+    }
+
 
 </script>
 
@@ -114,6 +122,7 @@
     </div>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div 
+        bind:this={editableDiv}
         contenteditable="true" 
         on:input={handleInput}
         on:keydown={handleKeyDown}

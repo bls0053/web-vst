@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Key from "./Key.svelte";
     import { afterUpdate, onMount } from "svelte";
-    import notes from "./KeyData.json";
+    import notes from "./KeyDataC2.json";
 	import WaveCont from "./WaveCont.svelte";
 
     interface Note {
