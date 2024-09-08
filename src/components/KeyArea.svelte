@@ -20,7 +20,7 @@
     let controlOn: boolean = false;
     let noteOn: boolean = false;
     let octaveValue: number = 0;
-    let pitch: number = .48;
+    let pitch: number = 2;
     
 
 
@@ -70,8 +70,8 @@
             <EffectCol>
                 <EffectLabel size="small">Pitch Bend</EffectLabel>
                 <EffectRow>
-                    <Slider bind:value={pitch} max={.96} step={.01} />
-                    <div class="w-1/5">{(pitch - .48).toFixed(2)}</div>
+                    <Slider bind:value={pitch} max={4} step={.01} />
+                    <div class="w-1/5">{(pitch - 2).toFixed(2)}</div>
                     
                 </EffectRow>
             </EffectCol>

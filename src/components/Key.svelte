@@ -106,8 +106,10 @@
 
     function updateFrequency(newPitch: number) {
         if (oscillator) {
+            console.log(pitch-2)
             const now = audioContext.currentTime;
-            frequencyParam.setValueAtTime(((frequency + ((newPitch-.48)*((frequency)*(2**(1/12))))) / (2**(octave * -1))), now);
+            frequencyParam.setValueAtTime(((frequency * (2**((pitch - 2)/12))) / (2**(octave * -1))), now);
+            console.log(frequencyParam)
         }
     }
 
