@@ -15,7 +15,7 @@
 
     let adsrValue: number[] = [0.1, 0.1, 1, 0.1];
     let currWave: string = "square";
-    let currFilter: string = "lowpass";
+    let currFilter: string = "allpass";
 
 
     $: if (adsrValue) {
@@ -141,6 +141,11 @@
                 </FilterCont>
                 <FilterCont id="highshelf" bind:currFilter={currFilter}>
                     <Icon style="font-size: 30px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-shelving-hi"/>
+                </FilterCont>
+            </EffectRow>
+            <EffectRow>
+                <FilterCont id="allpass" bind:currFilter={currFilter}>
+                    <Icon style="font-size: 50px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bypass"/>
                 </FilterCont>
             </EffectRow>
         </EffectCol>
