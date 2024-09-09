@@ -24,8 +24,19 @@
     let decay: number;
     let sustain: number;
     let release: number;
+    let filterFreq: number;
+    let filterBand: number;
+    let filterGain: number;
+    let filterMix: number;
 
     
+    $: if (filterFields) {
+        filterFreq = filterFields[0];
+        filterBand = filterFields[1];
+        filterGain = filterFields[2];
+        let filterMixNum = filterFields[3]
+        filterMix = filterMixNum == 0 ? 0 : filterMixNum / 100;
+    }
 
     $: if (adsr) {
         attack = adsr[0];
@@ -43,6 +54,8 @@
     let oscillator: OscillatorNode;
     let frequencyParam: AudioParam;
     let gainNode: GainNode;
+    let gainNodeDry: GainNode;
+    let gainNodeWet: GainNode;
     let filterNode: BiquadFilterNode;
     
     function applyADSR(gainNode: GainNode) {
@@ -60,18 +73,22 @@
 
         const now = audioContext.currentTime;
         filterNode = audioContext.createBiquadFilter();
+        updateFilterType();
+        updateFilterQ();
+        updateFilterFreq();
 
-        updateFilterType()
-        filterNode.Q.setValueAtTime(1, now)
-        
-        
-        
-        
         gainNode = audioContext.createGain();
+        gainNodeDry = audioContext.createGain();   
+        gainNodeWet = audioContext.createGain();
+        updateFilterMix();
         applyADSR(gainNode);
-
+        
         oscillator.connect(filterNode);
-        filterNode.connect(gainNode)
+        filterNode.connect(gainNodeWet)
+        oscillator.connect(gainNodeDry);
+
+        gainNodeWet.connect(gainNode);
+        gainNodeDry.connect(gainNode);
         gainNode.connect(masterGain);
         
         oscillator.start();
@@ -91,8 +108,52 @@
     }
 
     $: if (filter) {
-        console.log(filter)
         updateFilterType(); 
+    }
+
+    $: if (filterMix) {
+        updateFilterMix(); 
+    }
+
+    $: if (filterBand) {
+        updateFilterQ(); 
+    }
+
+    $: if (filterFreq) {
+        updateFilterFreq(); 
+    }
+
+    $: if (filterGain) {
+        updateFilterGain(); 
+    }
+
+    function updateFilterGain() {
+        if (filterNode) {
+            const now = audioContext.currentTime;
+            filterNode.gain.setValueAtTime(filterGain, now);
+        }
+    }
+
+    function updateFilterFreq() {
+        if (filterNode) {
+            const now = audioContext.currentTime;
+            filterNode.frequency.setValueAtTime(filterFreq, now);
+        }
+    }
+
+
+    function updateFilterQ() {
+        if (filterNode) {
+            const now = audioContext.currentTime;
+            filterNode.Q.setValueAtTime(filterBand, now)
+        }
+    }
+
+    function updateFilterMix() {
+        if (gainNodeDry && gainNodeWet) {
+            gainNodeDry.gain.value = (1 - filterMix);
+            gainNodeWet.gain.value = (filterMix);
+        }
     }
 
     function updateFilterType() {

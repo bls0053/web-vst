@@ -14,7 +14,7 @@
 	const dispatch = createEventDispatcher();
 
     let adsrValue: number[] = [0.1, 0.1, 1, 0.1];
-    let filterFields: number[] = [10000, 500, 0, 100];
+    let filterFields: number[] = [1000, 10, 0, 100];
     let currWave: string = "square";
     let currFilter: string = "allpass";
 
@@ -140,43 +140,44 @@
                     <FilterCont id="lowpass" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-lowpass"/>
                     </FilterCont>
-                    <FilterCont id="highpass" bind:currFilter={currFilter}>
-                        <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-highpass"/>
+                    <FilterCont id="peaking" bind:currFilter={currFilter}>
+                        <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bell"/>
                     </FilterCont>
                     <FilterCont id="bandpass" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bandpass"/>
                     </FilterCont>
-                    <FilterCont id="notch" bind:currFilter={currFilter}>
-                        <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-notch"/>
-                    </FilterCont>
+                    
                 </EffectRow>
 
                 <EffectRow>
-                    <FilterCont id="lowshelf" bind:currFilter={currFilter}>
+                    <!-- <FilterCont id="lowshelf" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-shelving-lo"/>
                     </FilterCont>
                     <FilterCont id="highshelf" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-shelving-hi"/>
+                    </FilterCont> -->
+                    <FilterCont id="highpass" bind:currFilter={currFilter}>
+                        <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-highpass"/>
                     </FilterCont>
-                    <FilterCont id="peaking" bind:currFilter={currFilter}>
-                        <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bell"/>
-                    </FilterCont>
+                    
                     <FilterCont id="allpass" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bypass"/>
                     </FilterCont>
-
+                    <FilterCont id="notch" bind:currFilter={currFilter}>
+                        <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-notch"/>
+                    </FilterCont>
 
 
                 </EffectRow>
             </EffectCol>
             <EffectCol size={3}>
                 <EffectRow size={3}>
-                    <EffectKnob textSize={40} bind:value={filterFields[0]} min={20} max={20000}></EffectKnob>
+                    <EffectKnob textSize={40} bind:value={filterFields[0]} min={20} max={2000}></EffectKnob>
                     <EffectLabel width={3} size="small">Frequency</EffectLabel>
                         
                 </EffectRow>
                 <EffectRow size={3}>
-                    <EffectKnob textSize={40} bind:value={filterFields[1]} min={0.0001} max={1000}></EffectKnob>
+                    <EffectKnob textSize={40} bind:value={filterFields[1]} min={0.0001} max={30}></EffectKnob>
                     <EffectLabel width={3} size="small">Bandwidth</EffectLabel>
                         
                 </EffectRow>
