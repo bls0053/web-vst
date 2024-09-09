@@ -22,6 +22,7 @@
     export let noteOn: boolean;
     export let pitchValue: number;
     export let filterValue: string;
+    export let filterFields: number[];
 
 
     let notesData:NotesData = notes;
@@ -135,6 +136,7 @@
                     controlOn={controlOn}
                     pitch={pitchValue}
                     filter={filterValue}
+                    filterFields={filterFields}
 
                     keypress={notesData[note].keypress}
                     frequency={notesData[note].frequency}

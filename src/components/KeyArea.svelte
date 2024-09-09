@@ -16,6 +16,7 @@
     export let adsrValue: number[];
     export let waveValue: string;
     export let filterValue: string;
+    export let filterFields: number[];
     
     let controlOn: boolean = false;
     let noteOn: boolean = false;
@@ -43,30 +44,31 @@
         controlOn={controlOn}
         pitchValue={pitch}
         filterValue={filterValue}
+        filterFields={filterFields}
     />
 
     <EffectCont>
-        <EffectRow>
+        <EffectRow size={4}>
             <EffectCol>
-                <EffectLabel size="small">Gain</EffectLabel>
-                <EffectKnob bind:value={gainValue} min={0} max={100} textSize={40}></EffectKnob>
+                <EffectLabel size="small">Volume</EffectLabel>
+                <EffectRow>
+                    <EffectKnob bind:value={gainValue} min={0} max={100} textSize={50}></EffectKnob>
+                </EffectRow>
             </EffectCol>
         </EffectRow>
 
-        <EffectRow>
-            <EffectCol>
+        <EffectRow size={4}>
+            <EffectCol size={3}>
                 <EffectLabel size="small">Octave</EffectLabel>
                 <OctaveEffect bind:currOctave={octaveValue}></OctaveEffect>
             </EffectCol>
-            <EffectCol>
+            <EffectCol size={3}>
                 <EffectLabel size="small">Modes</EffectLabel>
                 <ModeToggles bind:noteOn={noteOn} bind:controlOn={controlOn}></ModeToggles>
             </EffectCol>
-
-
         </EffectRow>
 
-        <EffectRow>
+        <EffectRow size={4}>
             <EffectCol>
                 <EffectLabel size="small">Pitch Bend</EffectLabel>
                 <EffectRow>
@@ -75,19 +77,7 @@
                     
                 </EffectRow>
             </EffectCol>
-            
-            
         </EffectRow>
-        <EffectRow>
-            <EffectCol>
-                <EffectLabel size="small">coming soon :D</EffectLabel>
-
-            </EffectCol>
-            
-        </EffectRow>
-        
-
-
     </EffectCont>
 
 

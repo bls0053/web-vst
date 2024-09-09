@@ -9,6 +9,7 @@
     let adsrValue: number[];
     let waveValue: string;
     let filterValue: string;
+    let filterFields: number[];
 
     function setAdsr(event: any) {
         adsrValue = event.detail.adsr;
@@ -23,6 +24,11 @@
     function setFilter(event: any) {
         filterValue = event.detail.filter;
         console.log(filterValue)
+    }
+
+    function setFilterFields(event: any) {
+        filterFields = event.detail.filterFields;
+        console.log(filterFields)
     }
 
 </script>
@@ -40,11 +46,13 @@ bg-orange-200 rounded-md">
         on:effectAreaAdsr={setAdsr}
         on:effectAreaWave={setWave}
         on:effectAreaFilter={setFilter}
+        on:effectAreaFilterFields={setFilterFields}
     />
     <KeyArea 
     adsrValue={adsrValue}
     waveValue={waveValue}
     filterValue={filterValue}
+    filterFields={filterFields}
     />
 
 

@@ -36,7 +36,7 @@
 
 
 
-<div class="flex flex-row justify-between w-4/5">
+<div class="flex flex-row items-center justify-center h-full">
     
     <button on:click={decrement}>
         <Icon style="font-size: 30px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="mingcute:down-fill"/>

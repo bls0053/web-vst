@@ -1,11 +1,14 @@
 <script lang="ts">
 
+    export let size: number = 12;
 
 </script>
 
 
 
 
-<div class=" flex flex-row justify-evenly items-center w-full h-full gap-2">
+<div 
+style="height: calc(100% * {size / 12});"
+class=" flex flex-row justify-evenly items-center w-full h-full gap-2">
     <slot></slot>
 </div>

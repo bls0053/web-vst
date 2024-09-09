@@ -21,7 +21,7 @@
 
 
 <button on:click={handleClick} 
-    class="flex flex-row justify-evenly items-center w-1/6 pr-1 h-full rounded-md 
+    class="flex flex-row justify-evenly items-center w-1/3 pr-1 h-full rounded-md 
     {currFilter==id ?
     "opacity-100 transition-transform scale-110" 
     : "opacity-50 transition-transform scale-90"}" 

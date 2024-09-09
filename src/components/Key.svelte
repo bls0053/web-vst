@@ -18,6 +18,7 @@
     export let noteOn: boolean;
     export let pitch: number;
     export let filter: string;
+    export let filterFields: number[];
 
     let attack: number;
     let decay: number;
@@ -53,17 +54,19 @@
 
 	function playNote() {
         oscillator = audioContext.createOscillator();
-        filterNode = audioContext.createBiquadFilter();
-        
-        const now = audioContext.currentTime;
-        frequencyParam = oscillator.frequency;
-        
-        filterNode.type = filter;
-        filterNode.Q.setValueAtTime(1, now)
         oscillator.type = wave;
-        
-        updateFilter()
+        frequencyParam = oscillator.frequency;
         updateFrequency(pitch);
+
+        const now = audioContext.currentTime;
+        filterNode = audioContext.createBiquadFilter();
+
+        updateFilterType()
+        filterNode.Q.setValueAtTime(1, now)
+        
+        
+        
+        
         gainNode = audioContext.createGain();
         applyADSR(gainNode);
 
@@ -89,10 +92,10 @@
 
     $: if (filter) {
         console.log(filter)
-        updateFilter(); 
+        updateFilterType(); 
     }
 
-    function updateFilter() {
+    function updateFilterType() {
         if (filterNode) {
             filterNode.type = filter;
         }

@@ -128,7 +128,7 @@
         contenteditable="true" 
         on:input={handleInput}
         on:keydown={handleKeyDown}
-        class="flex flex-row justify-center w-1/3 bg-green-200 border-2 rounded-md border-green-400">
+        class="flex flex-row justify-center w-1/2 bg-green-200 border-2 rounded-md border-green-400">
         {value}
     
     </div>
