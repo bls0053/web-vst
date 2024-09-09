@@ -8,7 +8,12 @@
     const dispatch = createEventDispatcher();
 
     function handleClick() {
-        currFilter = id;
+        if (currFilter == id) {
+            currFilter = "allpass";
+        }
+        else {
+            currFilter = id;
+        }    
         dispatch('filterChange', { currFilter });
     }
 

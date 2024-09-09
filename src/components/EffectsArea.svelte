@@ -10,6 +10,7 @@
 	import EffectCol from './EffectCol.svelte';
 	import WaveCont from './WaveCont.svelte';
 	import FilterCont from './FilterCont.svelte';
+	import EffectKnob2 from './EffectKnob2.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -79,21 +80,21 @@
         <EffectRow>
             <EffectCol>
                 <EffectLabel>Attack</EffectLabel>
-                <EffectKnob bind:value={adsrValue[0]} min={0} max={5}></EffectKnob>
+                <EffectKnob2 bind:value={adsrValue[0]} min={0} max={5}/>
             </EffectCol>
             <EffectCol>
                 <EffectLabel>Decay</EffectLabel>
-                <EffectKnob bind:value={adsrValue[1]} min={0} max={5}></EffectKnob>
+                <EffectKnob2 bind:value={adsrValue[1]} min={0} max={5}/>
             </EffectCol>
         </EffectRow>
         <EffectRow>
             <EffectCol>
                 <EffectLabel>Sustain</EffectLabel>
-                <EffectKnob bind:value={adsrValue[2]} min={0} max={1}></EffectKnob>
+                <EffectKnob2 bind:value={adsrValue[2]} min={0} max={1}/>
             </EffectCol>
             <EffectCol>
                 <EffectLabel>Release</EffectLabel>
-                <EffectKnob bind:value={adsrValue[3]} min={0} max={5}></EffectKnob>
+                <EffectKnob2 bind:value={adsrValue[3]} min={0} max={5}/>
             </EffectCol>
         </EffectRow>
     </EffectCont>
@@ -124,25 +125,26 @@
             
         </EffectRow>
         </EffectCol>
-             
-        
-        
     </EffectCont>
 
 
+    <EffectCont>
+        
+    </EffectCont>
+
     
-    <EffectCont size={3}>
+    <EffectCont size={2}>
     
         <EffectRow>
-            <EffectCol size={3}>
+            <EffectCol size={2}>
                 <EffectLabel>Filter</EffectLabel>
                 <EffectRow>
                     <FilterCont id="lowpass" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-lowpass"/>
                     </FilterCont>
-                    <FilterCont id="peaking" bind:currFilter={currFilter}>
+                    <!-- <FilterCont id="peaking" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bell"/>
-                    </FilterCont>
+                    </FilterCont> -->
                     <FilterCont id="bandpass" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bandpass"/>
                     </FilterCont>
@@ -159,10 +161,9 @@
                     <FilterCont id="highpass" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-highpass"/>
                     </FilterCont>
-                    
-                    <FilterCont id="allpass" bind:currFilter={currFilter}>
+                    <!-- <FilterCont id="allpass" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bypass"/>
-                    </FilterCont>
+                    </FilterCont> -->
                     <FilterCont id="notch" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-notch"/>
                     </FilterCont>
@@ -170,24 +171,24 @@
 
                 </EffectRow>
             </EffectCol>
-            <EffectCol size={3}>
-                <EffectRow size={3}>
-                    <EffectKnob textSize={40} bind:value={filterFields[0]} min={20} max={2000}></EffectKnob>
+            <EffectCol size={4}>
+                <EffectRow size={4}>
+                    <EffectKnob2 textSize={50} bind:value={filterFields[0]} min={20} max={2000}/>
                     <EffectLabel width={3} size="small">Frequency</EffectLabel>
                         
                 </EffectRow>
-                <EffectRow size={3}>
-                    <EffectKnob textSize={40} bind:value={filterFields[1]} min={0.0001} max={30}></EffectKnob>
+                <EffectRow size={4}>
+                    <EffectKnob2 textSize={50} bind:value={filterFields[1]} min={0.0001} max={30}/>
                     <EffectLabel width={3} size="small">Bandwidth</EffectLabel>
                         
                 </EffectRow>
-                <EffectRow size={3}>
-                    <EffectKnob textSize={40} bind:value={filterFields[2]} min={-40} max={40}></EffectKnob>
+                <!-- <EffectRow size={4}>
+                    <EffectKnob2 textSize={50} bind:value={filterFields[2]} min={-40} max={40}/>
                     <EffectLabel width={3} size="small">Gain</EffectLabel>
                     
-            </EffectRow>
-                <EffectRow size={3}>
-                    <EffectKnob textSize={40} bind:value={filterFields[3]} min={0} max={100}></EffectKnob>
+                </EffectRow> -->
+                <EffectRow size={4}>
+                    <EffectKnob2 textSize={50} bind:value={filterFields[3]} min={0} max={100}/>
                     <EffectLabel width={3} size="small">Mix</EffectLabel>
                 </EffectRow>
             </EffectCol>

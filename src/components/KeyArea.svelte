@@ -10,6 +10,7 @@
     import OctaveEffect from "./OctaveEffect.svelte";
     import ModeToggles from "./ModeToggles.svelte";
 	import Slider from "./Slider.svelte";
+	import EffectKnob2 from "./EffectKnob2.svelte";
 
 
     export let gainValue: number = 33;
@@ -52,7 +53,7 @@
             <EffectCol>
                 <EffectLabel size="small">Volume</EffectLabel>
                 <EffectRow>
-                    <EffectKnob bind:value={gainValue} min={0} max={100} textSize={50}></EffectKnob>
+                    <EffectKnob2 bind:value={gainValue} min={0} max={100} textSize={50}/>
                 </EffectRow>
             </EffectCol>
         </EffectRow>
