@@ -53,7 +53,7 @@
             <EffectCol>
                 <EffectLabel size="small">Volume</EffectLabel>
                 <EffectRow>
-                    <EffectKnob2 bind:value={gainValue} min={0} max={100} textSize={50}/>
+                    <EffectKnob2 decimals={0} bind:value={gainValue} min={0} max={100} textSize={50}/>
                 </EffectRow>
             </EffectCol>
         </EffectRow>

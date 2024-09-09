@@ -10,13 +10,12 @@
     export let min: number = 0;
     export let max: number = 1;
     export let value: number = 0;
-
+    export let decimals: number = 2;
     let originalValue: number;
     let rotation = 0;
-    let container: HTMLDivElement;
     let editableDiv: HTMLDivElement;
-    let lastAngle: number= 0;
-    let mousePressed: boolean = false;
+
+
     const dispatch = createEventDispatcher();
 
 	export let rotRange = 2 * Math.PI * 45;
@@ -33,7 +32,7 @@
 	
 	function pointerMove({ clientY }) {
 		const valueDiff = valueRange * (clientY - startY) / pixelRange;
-		value = parseFloat(clamp(startValue - valueDiff, min, max).toFixed(2))
+		value = parseFloat(clamp(startValue - valueDiff, min, max).toFixed(4))
 	}
 	
 	function pointerDown({ clientY }) {
@@ -85,14 +84,14 @@
     $: if (value==0) {
             console.log(value)
             if (editableDiv) {
-                editableDiv.innerText = value.toString();
+                editableDiv.innerText = value.toFixed(decimals).toString();
         }
     }
 
     $: if (value) {
             console.log(value)
             if (editableDiv) {
-                editableDiv.innerText = value.toString();
+                editableDiv.innerText = value.toFixed(decimals).toString();
         }
     }
 

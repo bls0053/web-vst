@@ -178,7 +178,7 @@
                         
                 </EffectRow>
                 <EffectRow size={4}>
-                    <EffectKnob2 textSize={50} bind:value={filterFields[1]} min={0.0001} max={30}/>
+                    <EffectKnob2 decimals={3} textSize={50} bind:value={filterFields[1]} min={0.001} max={30}/>
                     <EffectLabel width={3} size="small">Bandwidth</EffectLabel>
                         
                 </EffectRow>
@@ -188,7 +188,7 @@
                     
                 </EffectRow> -->
                 <EffectRow size={4}>
-                    <EffectKnob2 textSize={50} bind:value={filterFields[3]} min={0} max={100}/>
+                    <EffectKnob2 decimals={1} textSize={50} bind:value={filterFields[3]} min={0} max={100}/>
                     <EffectLabel width={3} size="small">Mix</EffectLabel>
                 </EffectRow>
             </EffectCol>
