@@ -3,30 +3,32 @@
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
 
-    export let currOctave: number = 0;
-    let range: number[] = [-2, -1, 0, 1, 2, 3, 4];
+    export let value: number;
+    export let min: number;
+    export let max: number;
+    export let increment: number;
 
     $: {
-        dispatch("octaveChange", {currOctave})
+        dispatch("octaveChange", {value})
     }
 
-    $: if (currOctave==0) {
-        dispatch("octaveChange", {currOctave})
+    $: if (value==0) {
+        dispatch("octaveChange", {value})
     }
 
 
-    function increment() {
-        if (currOctave == range[6]) {
+    function increase() {
+        if (value == max) {
             return;
         }
-        currOctave++;
+        value += increment;
     }
 
-    function decrement() {
-        if (currOctave == range[0]) {
+    function decrease() {
+        if (value == min) {
             return;
         }
-        currOctave--;
+        value -= increment;
     }
 
 
@@ -38,11 +40,11 @@
 
 <div class="flex flex-row items-center justify-center h-full">
     
-    <button on:click={decrement}>
+    <button on:click={decrease}>
         <Icon style="font-size: 30px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="mingcute:down-fill"/>
     </button>
-    <div>{currOctave}</div>
-    <button on:click={increment}>
+    <div>{value}</div>
+    <button on:click={increase}>
         <Icon style="font-size: 30px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="mingcute:up-fill"/>
     </button>
 </div>

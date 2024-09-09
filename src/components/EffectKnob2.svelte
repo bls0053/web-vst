@@ -36,7 +36,6 @@
 	}
 	
 	function pointerDown({ clientY }) {
-		console.log({ clientY });
 		startY = clientY;
 		startValue = value;
 		window.addEventListener('pointermove', pointerMove);
@@ -82,14 +81,14 @@
     }
 
     $: if (value==0) {
-            console.log(value)
+
             if (editableDiv) {
                 editableDiv.innerText = value.toFixed(decimals).toString();
         }
     }
 
     $: if (value) {
-            console.log(value)
+
             if (editableDiv) {
                 editableDiv.innerText = value.toFixed(decimals).toString();
         }

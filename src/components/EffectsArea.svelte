@@ -11,14 +11,22 @@
 	import WaveCont from './WaveCont.svelte';
 	import FilterCont from './FilterCont.svelte';
 	import EffectKnob2 from './EffectKnob2.svelte';
+	import Recorder from './Recorder.svelte';
 
 	const dispatch = createEventDispatcher();
+
+    export let masterGain: GainNode;
+    export let audioContext: AudioContext;
 
     let adsrValue: number[] = [0.1, 0.1, 1, 0.1];
     let filterFields: number[] = [1000, 10, 0, 100];
     let currWave: string = "square";
     let currFilter: string = "allpass";
 
+
+    $: if (masterGain) {
+        console.log("here")
+    }
 
     $: if (adsrValue) {
         dispatchAdsr();
@@ -76,32 +84,40 @@
 <div class="flex flex-row w-full h-1/3 gap-3">
 
 
-    <EffectCont size={2}>
+    <EffectCont size={20}>
         <EffectRow>
             <EffectCol>
                 <EffectLabel>Attack</EffectLabel>
-                <EffectKnob2 bind:value={adsrValue[0]} min={0} max={5}/>
+                <EffectRow>
+                    <EffectKnob2 textSize={40} bind:value={adsrValue[0]} min={0} max={5}/>
+                </EffectRow>
             </EffectCol>
             <EffectCol>
                 <EffectLabel>Decay</EffectLabel>
-                <EffectKnob2 bind:value={adsrValue[1]} min={0} max={5}/>
+                <EffectRow>
+                    <EffectKnob2 textSize={40} bind:value={adsrValue[1]} min={0} max={5}/>
+                </EffectRow>
             </EffectCol>
         </EffectRow>
         <EffectRow>
             <EffectCol>
                 <EffectLabel>Sustain</EffectLabel>
-                <EffectKnob2 bind:value={adsrValue[2]} min={0} max={1}/>
+                <EffectRow>
+                    <EffectKnob2 textSize={40} bind:value={adsrValue[2]} min={0} max={1}/>
+                </EffectRow>
             </EffectCol>
             <EffectCol>
                 <EffectLabel>Release</EffectLabel>
-                <EffectKnob2 bind:value={adsrValue[3]} min={0} max={5}/>
+                <EffectRow>
+                    <EffectKnob2 textSize={40} bind:value={adsrValue[3]} min={0} max={5}/>
+                </EffectRow>
             </EffectCol>
         </EffectRow>
     </EffectCont>
 
  
     
-    <EffectCont>
+    <EffectCont size={15}>
         <EffectCol>
             <EffectLabel>Wave</EffectLabel>
         <EffectRow>
@@ -128,13 +144,12 @@
     </EffectCont>
 
 
-    <EffectCont>
-        
+    <EffectCont size={35}>
+           <Recorder masterNode={masterGain} audioContext={audioContext}/>
     </EffectCont>
 
     
-    <EffectCont size={2}>
-    
+    <EffectCont size={30}>
         <EffectRow>
             <EffectCol size={2}>
                 <EffectLabel>Filter</EffectLabel>
@@ -142,9 +157,7 @@
                     <FilterCont id="lowpass" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-lowpass"/>
                     </FilterCont>
-                    <!-- <FilterCont id="peaking" bind:currFilter={currFilter}>
-                        <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bell"/>
-                    </FilterCont> -->
+
                     <FilterCont id="bandpass" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bandpass"/>
                     </FilterCont>
@@ -152,18 +165,11 @@
                 </EffectRow>
 
                 <EffectRow>
-                    <!-- <FilterCont id="lowshelf" bind:currFilter={currFilter}>
-                        <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-shelving-lo"/>
-                    </FilterCont>
-                    <FilterCont id="highshelf" bind:currFilter={currFilter}>
-                        <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-shelving-hi"/>
-                    </FilterCont> -->
+
                     <FilterCont id="highpass" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-highpass"/>
                     </FilterCont>
-                    <!-- <FilterCont id="allpass" bind:currFilter={currFilter}>
-                        <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-bypass"/>
-                    </FilterCont> -->
+
                     <FilterCont id="notch" bind:currFilter={currFilter}>
                         <Icon style="font-size: 40px; color: rgb(147 51 234 / var(--tw-bg-opacity));" icon="fad:filter-notch"/>
                     </FilterCont>

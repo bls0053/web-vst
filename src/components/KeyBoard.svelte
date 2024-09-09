@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Key from "./Key.svelte";
-    import { afterUpdate, onMount } from "svelte";
+    import { afterUpdate, createEventDispatcher, onMount } from "svelte";
     import notes from "./KeyDataC2.json";
 	import WaveCont from "./WaveCont.svelte";
 
@@ -23,24 +23,29 @@
     export let pitchValue: number;
     export let filterValue: string;
     export let filterFields: number[];
-
+    export let masterGain: GainNode;
+    export let audioContext: AudioContext;
+    
+    const dispatch = createEventDispatcher()
 
     let notesData:NotesData = notes;
-    let audioContext: AudioContext;
+    
 
-    let masterGain: GainNode;
+    
     let init: boolean = false;
 
     let container: HTMLDivElement;
     let observer: MutationObserver;
    
 
+    $: if (audioContext) {
+        dispatch("acontx", {audioContext})
+    }
 
     $: if (masterGain) {
         masterGain.gain.value = gainValue / 300;
+        dispatch("master", {masterGain})
     }
-
-
 
     function start() {
         audioContext = new AudioContext();

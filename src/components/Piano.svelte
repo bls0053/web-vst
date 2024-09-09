@@ -11,6 +11,10 @@
     let filterValue: string;
     let filterFields: number[];
 
+    let audioContext: AudioContext;
+    let masterGain: GainNode;
+
+
     function setAdsr(event: any) {
         adsrValue = event.detail.adsr;
         console.log(adsrValue)
@@ -47,12 +51,16 @@ bg-orange-200 rounded-md">
         on:effectAreaWave={setWave}
         on:effectAreaFilter={setFilter}
         on:effectAreaFilterFields={setFilterFields}
+        masterGain={masterGain}
+        audioContext={audioContext}
     />
     <KeyArea 
     adsrValue={adsrValue}
     waveValue={waveValue}
     filterValue={filterValue}
     filterFields={filterFields}
+    bind:masterGain={masterGain}
+    bind:audioContext={audioContext}
     />
 
 
