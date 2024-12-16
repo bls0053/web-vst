@@ -13,6 +13,8 @@
 	import EffectKnob2 from './EffectKnob2.svelte';
 	import Recorder from './Recorder.svelte';
 
+    import { writable } from "svelte/store";
+
 	const dispatch = createEventDispatcher();
 
     export let masterGain: GainNode;
@@ -72,12 +74,26 @@
         dispatchWave();
         dispatchFilter();
         dispatchFilterFields();
+        checkScreenSize();
     })
+
+
+    const isSmallScreen = writable(false);
+
+    function checkScreenSize() {
+        const mediaQuery = window.matchMedia("(max-width: 1280px)");
+        isSmallScreen.set(mediaQuery.matches);
+
+        mediaQuery.addEventListener("change", (e) => {
+            isSmallScreen.set(e.matches);
+        });
+    }
+
+    $: textSize = $isSmallScreen ? 20 : 40;
+    $: textSize2 = $isSmallScreen ? 20 : 50;
  
 
 </script>
-
-
 
 
 
@@ -89,13 +105,13 @@
             <EffectCol>
                 <EffectLabel>Attack</EffectLabel>
                 <EffectRow>
-                    <EffectKnob2 textSize={40} bind:value={adsrValue[0]} min={0} max={5}/>
+                    <EffectKnob2 textSize={textSize} bind:value={adsrValue[0]} min={0} max={5}/>
                 </EffectRow>
             </EffectCol>
             <EffectCol>
                 <EffectLabel>Decay</EffectLabel>
                 <EffectRow>
-                    <EffectKnob2 textSize={40} bind:value={adsrValue[1]} min={0} max={5}/>
+                    <EffectKnob2 textSize={textSize} bind:value={adsrValue[1]} min={0} max={5}/>
                 </EffectRow>
             </EffectCol>
         </EffectRow>
@@ -103,13 +119,13 @@
             <EffectCol>
                 <EffectLabel>Sustain</EffectLabel>
                 <EffectRow>
-                    <EffectKnob2 textSize={40} bind:value={adsrValue[2]} min={0} max={1}/>
+                    <EffectKnob2 textSize={textSize} bind:value={adsrValue[2]} min={0} max={1}/>
                 </EffectRow>
             </EffectCol>
             <EffectCol>
                 <EffectLabel>Release</EffectLabel>
                 <EffectRow>
-                    <EffectKnob2 textSize={40} bind:value={adsrValue[3]} min={0} max={5}/>
+                    <EffectKnob2 textSize={textSize} bind:value={adsrValue[3]} min={0} max={5}/>
                 </EffectRow>
             </EffectCol>
         </EffectRow>
@@ -179,12 +195,12 @@
             </EffectCol>
             <EffectCol size={4}>
                 <EffectRow size={4}>
-                    <EffectKnob2 textSize={50} bind:value={filterFields[0]} min={20} max={2000}/>
+                    <EffectKnob2 textSize={textSize2} bind:value={filterFields[0]} min={20} max={2000}/>
                     <EffectLabel width={3} size="small">Frequency</EffectLabel>
                         
                 </EffectRow>
                 <EffectRow size={4}>
-                    <EffectKnob2 decimals={3} textSize={50} bind:value={filterFields[1]} min={0.001} max={30}/>
+                    <EffectKnob2 decimals={3} textSize={textSize2} bind:value={filterFields[1]} min={0.001} max={30}/>
                     <EffectLabel width={3} size="small">Bandwidth</EffectLabel>
                         
                 </EffectRow>
@@ -194,7 +210,7 @@
                     
                 </EffectRow> -->
                 <EffectRow size={4}>
-                    <EffectKnob2 decimals={1} textSize={50} bind:value={filterFields[3]} min={0} max={100}/>
+                    <EffectKnob2 decimals={1} textSize={textSize2} bind:value={filterFields[3]} min={0} max={100}/>
                     <EffectLabel width={3} size="small">Mix</EffectLabel>
                 </EffectRow>
             </EffectCol>
